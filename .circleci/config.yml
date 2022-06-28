@@ -268,11 +268,16 @@ jobs:
           name: Get backend url
           working_directory: ./frontend
           command: |
-            BACKEND_IP=$(curl --insecure https://kvdb.io/7NUFVZYYdpoWpL9T2hwGhe/backend_ip_${CIRCLE_WORKFLOW_ID:0:7})
+            BACKEND_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" \
+              --output=text)
             export BACKEND_URL="http://${BACKEND_IP}:3030"
             echo "API_URL=${BACKEND_URL}"
             echo API_URL="${BACKEND_URL}" >> .env
             cat .env
+      - run:
+          name: Rebuild frontend with backend API Url
+          working_directory: ./frontend
+          command: npm run build
       - run:
           name: Deploy frontend objects
           working_directory: ./frontend
