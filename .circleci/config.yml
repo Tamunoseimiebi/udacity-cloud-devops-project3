@@ -203,26 +203,47 @@ jobs:
             pwd &&
             ls -la
             cat inventory.txt
-            ansible-playbook -i inventory.txt configure-server.yml
+            ansible-playbook -i inventory.txt configure-server.yml -vv
       - destroy_environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}  
 
-#   run-migrations:
-#     docker:
-#       # Docker image here that supports NodeJS
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Run migrations
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Send migration results to memstash
-#           command: |
-#             # Your code here
-#             exit 1
-#      # Here's where you will add some code to rollback on failure      
+  run-migrations:
+    docker:
+      image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - restore_cache:
+          keys:
+            - backend-build
+      - run:
+          name: install aws cli
+          working_directory: /tmp
+          command: |
+            sudo apt-get update && sudo apt-get install -yy less
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+      - run:
+          name: Run migrations
+          working_directory: ./backend
+          command: |
+            
+            npm install
+            npm run migrations > migrations_dump.txt
+      - run:
+          name: Send migration results to kvdb
+          command: |
+            if grep -q "has been executed successfully." migrations_dump.txt
+            then
+              echo "DB migration was successful..."
+              curl https://kvdb.io/7NUFVZYYdpoWpL9T2hwGhe/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+            else
+              echo "DB migration failed"
+            fi
+      - destroy_environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}      
 
 #   deploy-frontend:
 #     docker:
@@ -340,8 +361,8 @@ workflows:
       #         only: [test-feature-branch]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
       # - deploy-frontend:
       #     requires: [run-migrations]
       # - deploy-backend:
