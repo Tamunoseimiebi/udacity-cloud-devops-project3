@@ -318,11 +318,20 @@ jobs:
             node -v
             npm --version
             
-            
+      - run:
+          name: Build Backend
+          command: |
+            cd backend
+            pwd &&
+            ls -la
+            npm install
+            npm run build
+                
     
       - run:
           name: Zip the backend directory
           command: |
+            cd backend
             pwd &&
             ls -la
             tar -C backend -czvf artifact.tar.gz .
