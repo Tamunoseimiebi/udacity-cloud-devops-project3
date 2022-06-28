@@ -190,7 +190,7 @@ jobs:
           name: Install AWS
           command: |
             apk add aws-cli
-       - run:
+      - run:
           name: Install Ansible
           command: |
             apk add --update ansible
