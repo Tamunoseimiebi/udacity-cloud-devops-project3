@@ -331,7 +331,7 @@ jobs:
       - run:
           name: Zip the backend directory
           command: |
-            cd backend
+          
             pwd &&
             ls -la
             tar -C backend -czvf artifact.tar.gz .
