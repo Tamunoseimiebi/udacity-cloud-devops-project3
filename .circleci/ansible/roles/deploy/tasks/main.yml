@@ -1,34 +1,39 @@
 ---
-- name: "show remote environment"
-  shell: env
-  
-- name: "copy zipped archive"
-  become: true
-  synchronize:
-    src: ../../artifact.tar.gz
-    dest: /home/ubuntu/artifact.tar.gz
-    recursive: true
+  - name: "show remote environment"
+    shell: env
 
-- name: Creates directory
-  file:
-    path: ~/backend_app
-    state: directory
+  - name: "copy backend binaries"
+    become: yes
+    synchronize:
+      src: ../../backend/dist
+      dest: /home/ubuntu/uda_app
+      recursive: true
 
-- name: Extract the zipped artifact
-  shell: tar xzvf artifact.tar.gz --directory backend_app
+  - name: "copy node_modules"
+    become: yes
+    synchronize:
+      src: ../../backend/node_modules
+      dest: /home/ubuntu/uda_app
+      recursive: true
 
-- name: Install dependencies
-  args:
-    chdir: /home/ubuntu/backend_app
-  shell: npm install
+  - name: "delete anything that might already be running"
+    become: true
+    command: pm2 delete all
+    ignore_errors: true
 
-- name: "delete anything that might already be running"
-  become: true
-  ignore_errors: true
-  command: pm2 stop default
-
-- name: "start server"
-  become: true
-  args:
-    chdir: /home/ubuntu/backend_app
-  shell: pm2 start npm -- start
+  - name: "start server"
+    become: true
+    command: pm2 start -f ./main.js
+    args:
+      chdir: /home/ubuntu/uda_app/dist
+    environment:
+      ENVIRONMENT: production
+      TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
+      TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
+      TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
+      TYPEORM_PORT: 54352
+      TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
+      TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
+      TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
+      TYPEORM_MIGRATIONS: "{{ lookup('env', 'TYPEORM_MIGRATIONS')}}"
+      TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}"
