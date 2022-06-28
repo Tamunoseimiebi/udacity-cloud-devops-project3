@@ -308,8 +308,17 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip ansible curl rsync openssh nodejs npm bash
+            apk add --update tar gzip ansible curl rsync openssh
             ansible --version
+
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update nodejs npm bash
+            node -v
+            npm --version
+            
+            
     
       - run:
           name: Zip the backend directory
