@@ -474,14 +474,14 @@ jobs:
           command: |
             curl -sL https://rpm.nodesource.com/setup_14.x | bash -
             yum install -y nodejs npm
-      - run:
-          name: Store old WorkflowID in kvbd for cleanup phase
-          working_directory: ./.circleci/files
-          command: |
-            WorkflowID=$(aws cloudformation \
-              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-              --no-paginate --output text)
-            curl https://kvdb.io/7NUFVZYYdpoWpL9T2hwGhe/WorkflowID -d $WorkflowID
+      # - run:
+      #     name: Store old WorkflowID in kvbd for cleanup phase
+      #     working_directory: ./.circleci/files
+      #     command: |
+      #       WorkflowID=$(aws cloudformation \
+      #         list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+      #         --no-paginate --output text)
+      #       curl https://kvdb.io/7NUFVZYYdpoWpL9T2hwGhe/WorkflowID -d $WorkflowID
       - run:
           name: Update cloudfront distribution
           command: |
