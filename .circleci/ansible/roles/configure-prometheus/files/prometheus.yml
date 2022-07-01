@@ -20,8 +20,8 @@ scrape_configs:
   - job_name: "node"
     ec2_sd_configs:
       - region: us-east-1
-        access_key: AKIA3V5BZ5G4U2M3HSVF
-        secret_key: "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"
+        access_key: AKIARSA5RQPGISIOGJGY
+        secret_key: "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"
         port: 9100
         filters:
           - name: Name
