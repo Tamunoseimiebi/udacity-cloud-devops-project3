@@ -1,5 +1,8 @@
-1. Github  Repo:   https://github.com/Tamunoseimiebi/udacity-cloud-devops-project3
+1. Github  Repo (URL01):   https://github.com/Tamunoseimiebi/udacity-cloud-devops-project3
 
-2. Public URL of S3: http://udapeople-72bb6e7.s3-website-us-east-1.amazonaws.com/)
+2. Public URL of S3 (URL02): http://udapeople-00cd303.s3-website-us-east-1.amazonaws.com/
 
-3. 7NUFVZYYdpoWpL9T2hwGhe
+3. Production Frontend from from cloudfront screenshot (URL03): 
+
+4. Backend URL Screenshot (URL04): http://ec2-35-175-145-96.compute-1.amazonaws.com:3030/api/status
+7NUFVZYYdpoWpL9T2hwGhe
