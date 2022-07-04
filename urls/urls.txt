@@ -2,4 +2,4 @@
 
 2. Public URL of S3: http://udapeople-72bb6e7.s3-website-us-east-1.amazonaws.com/)
 
-3. 
+3. 7NUFVZYYdpoWpL9T2hwGhe
