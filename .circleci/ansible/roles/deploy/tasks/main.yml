@@ -20,7 +20,8 @@
 - name: Install dependencies
   args:
     chdir: /home/ubuntu/backend_app
-  shell: npm install
+  shell: npm install && npm run build
+         
 
 - name: "delete anything that might already be running"
   become: true

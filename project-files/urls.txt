@@ -1,13 +1,13 @@
 1. Github  Repo (URL01):   https://github.com/Tamunoseimiebi/udacity-cloud-devops-project3
 
-2. Public URL of S3 (URL02): http://udapeople-0edae55.s3-website-us-east-1.amazonaws.com/
+2. Public URL of S3 (URL02): http://udapeople-6cb06ef.s3-website-us-east-1.amazonaws.com/
 
 
-3. Backend URL Screenshot (URL04): ec2-44-202-25-84.compute-1.amazonaws.com:3030/api/status
+3. Backend URL Screenshot (URL04):ec2-54-226-96-139.compute-1.amazonaws.com:3030/api/status
 
 
 Public URL to your Prometheus Server [URL05]
-  http://ec2-44-202-159-197.compute-1.amazonaws.com:9090
+  http://ec2-3-92-195-173.compute-1.amazonaws.com:9090
 
 
 
