@@ -250,6 +250,7 @@ jobs:
           command: |
             apk add --update ansible
             ansible --version
+      - create-dotenv-file
       - run:
           name: Configure server
           working_directory: ./.circleci/ansible
@@ -272,6 +273,7 @@ jobs:
             - backend-build
       - aws-cli/setup:
           profile-name: default
+      - create-dotenv-file
       - run:
           name: Run migrations
           working_directory: ./backend
@@ -344,6 +346,7 @@ jobs:
             ansible --version
       - aws-cli/setup:
           profile-name: default
+      - create-dotenv-file
       - run:
           name: Zip the backend directory
           command: |
@@ -370,6 +373,7 @@ jobs:
       - run:
           name: Install dependencies
           command: apk add --update curl nodejs npm
+      - create-dotenv-file
       - run:
           name: Get backend url and Run backend smoke test
           command: |
