@@ -23,7 +23,7 @@ commands:
           name: Add env vars to .env file
           command: |
             echo ENVIRONMENT=$ENVIRONMENT > "./backend_app/.env"
-            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> "./backend_ap/.env"
+            echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> "./backend_app/.env"
             echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> "./backend_app/.env"
             echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> "./backend_app/.env"
             echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> "./backend_app/.env"
